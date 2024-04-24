@@ -2,12 +2,11 @@ const inquirer = require('inquirer');
 
 const Shape = require('./lib/shapes');
 
+const generateLogo = require('./lib/generateLogo');
 const fs = require('fs');
 const path = require('path');
 
-function writeToFile(fileName, answers) {
-    return fs.writeFileSync(path.join(process.cwd(), fileName), answers);
-}
+const fileName = 'logo.svg';
 
 inquirer.prompt(
     [
@@ -44,6 +43,29 @@ inquirer.prompt(
 )
 .then((answers) => {
     console.log(answers);
-    return writeToFile("logo.svg", {answers});
-});
+    writeToFile(fileName, answers);
 
+})
+
+
+function writeToFile(fileName, answers) {
+    console.log(answers);
+    let content = generateLogo(answers);
+    console.log(content);
+
+    fs.writeFile(fileName, content, function(error){});
+        console.log("Generating logo.svg");
+    
+}
+
+
+// // TODO: Create a function to initialize app
+// function init() {
+//     inquirer.prompt(questions)
+//         .then((inquirerAnswers) => {
+//            const fileName = 'logo.svg';
+//            writeToFile(fileName, inquirerAnswers);
+//         })
+// }
+// // Function call to initialize appscd
+// init();
