@@ -16,9 +16,9 @@ inquirer.prompt(
             name: 'characters',
             validate: function (answer) {
                 if (answer.length > 3) {
-                    return false;
+                    throw Error ('Please, enter up to three characters')
                 } else {
-                    return true
+                    return true;
                 }
             }
         },
@@ -49,23 +49,11 @@ inquirer.prompt(
 
 
 function writeToFile(fileName, answers) {
-    console.log(answers);
     let content = generateLogo(answers);
-    console.log(content);
-
-    fs.writeFile(fileName, content, function(error){});
+    fs.writeFile(fileName, content, function(error){
+        if(error) {
+            return console.log(error);
+        }
         console.log("Generating logo.svg");
-    
+    }); 
 }
-
-
-// // TODO: Create a function to initialize app
-// function init() {
-//     inquirer.prompt(questions)
-//         .then((inquirerAnswers) => {
-//            const fileName = 'logo.svg';
-//            writeToFile(fileName, inquirerAnswers);
-//         })
-// }
-// // Function call to initialize appscd
-// init();
